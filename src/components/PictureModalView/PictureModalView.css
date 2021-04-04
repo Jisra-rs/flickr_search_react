@@ -1,5 +1,3 @@
-/* Modal photo visualization */
-
 .modal {
     display: none; 
     position: fixed; 
@@ -56,6 +54,7 @@
 .button_div{
     display: flex;
     justify-content: center;
+    margin-bottom: 30px;
 }
 
 .button_div button{

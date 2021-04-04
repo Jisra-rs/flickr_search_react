@@ -1,41 +1,24 @@
 import React from 'react';
 import Picture from '../Picture/Picture';
-import './picturesResults.css';
+import './PicturesResults.css';
 
 const PicturesResults = props => {
-  const { pictureArray, handleOpenModal } = props;
-  const results = pictureArray;
-  let images;
-  let noImages;
-  // map variables to each item in fetched image array and return image component
-  if (results.photo.length > 0) {
-    images = results.photo.map((image, i) => {
-      let farm = image.farm;
-      let server = image.server;
-      let id = i;
-      let imageId = image.id;
-      let secret = image.secret;
-      let title = image.title;
-      let url = `https://farm${farm}.staticflickr.com/${server}/${imageId}_${secret}_m.jpg`;
-      return (
+  const { pictureArray: results, handleOpenModal } = props;
+  const images = results.photo.map(
+    ({ farm, server, id, secret, title }, key) => (
+      <li className="liphoto">
         <Picture
-          url={url}
-          key={id}
-          id={id}
-          alt={title}
+          url={`https://farm${farm}.staticflickr.com/${server}/${id}_${secret}_m.jpg`}
+          id={key}
+          key={key}
+          title={title}
           handleOpenModal={handleOpenModal}
         />
-      );
-    });
-  } else {
-    // noImages = <NoImages />; // return 'not found' component if no images fetched
-  }
-  return (
-    <div className="_divphotos">
-      <ul className="_ulphotos">{images}</ul>
-      {noImages}
-    </div>
+      </li>
+    )
   );
+
+  return <ul className="ulphotos">{images}</ul>;
 };
 
 export default PicturesResults;
