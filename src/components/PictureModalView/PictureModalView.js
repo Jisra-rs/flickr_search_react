@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 
 import './pictureModalView.css'
 
@@ -25,7 +25,7 @@ const PictureModalView = props => {
             <button disabled={ btnFinModDisable } onClick= { nextPicture } > &gt; </button>
         </div>
         <div>
-            <img className="modal-content" src={ url }></img>
+            <img className="modal-content" src={ url } alt='modal'></img>
         </div>
          
     </div>

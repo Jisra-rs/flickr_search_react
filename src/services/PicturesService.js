@@ -12,5 +12,3 @@ export async function getPicturesBySearch (queryPhoto,queryPage) {
     const responseJson = await response.json()
       return responseJson
 }
-
-export default {getPicturesBySearch};
