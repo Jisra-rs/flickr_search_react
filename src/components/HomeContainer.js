@@ -13,7 +13,7 @@ class HomeContainer extends Component {
 
     this.state = {
       pictureArray: [],
-      isFetched: true,
+      isFetching: true,
       total: 0,
       page: 1,
       lastPage: 0,
@@ -27,60 +27,36 @@ class HomeContainer extends Component {
     };
   }
 
-  handleSearch = async (search, page) => {
-    const responseJson = await getPicturesBySearch(search, page);
+  handleSearch = async (search, pageNumber) => {
+    const pictures = await getPicturesBySearch(search, pageNumber);
+    const { photos: pictureArray } = pictures;
+    const { pages: lastPage, page, total } = pictureArray;
     this.setState({
-      search: search,
-      pictureArray: responseJson.photos,
-      isFetched: false,
-      lastPage: responseJson.photos.pages,
-      page: responseJson.photos.page,
-      total: responseJson.photos.total,
+      search,
+      pictureArray,
+      isFetching: false,
+      lastPage,
+      page,
+      total,
     });
-    if (responseJson.photos.page !== 1) {
-      this.setState({
-        btnIniPagDisable: false,
-      });
-    } else {
-      this.setState({
-        btnIniPagDisable: true,
-      });
-    }
-    if (responseJson.photos.page !== responseJson.photos.pages) {
-      this.setState({
-        btnFinPagDisable: false,
-      });
-    } else {
-      this.setState({
-        btnFinPagDisable: true,
-      });
-    }
+
+    this.setState({
+      btnIniPagDisable: page === 1,
+      btnFinPagDisable: page === lastPage,
+    });
   };
 
-  /* 
-        Modal
-     */
-  // Abrir modal
-  handleOpenModal = e => {
-    let indexPicArray = Number(e.target.dataset.id);
+  handleOpenModal = event => {
+    let indexPicArray = Number(event?.target?.dataset?.id);
     let totalPic = this.state.total - 1;
     this.setState({
       hideModal: false,
       indexPic: indexPicArray,
-      btnIniModDisable: false,
-      btnFinModDisable: false,
+      btnFinModDisable: indexPicArray === totalPic - 1,
+      btnIniModDisable: indexPicArray === 0,
     });
-    if (indexPicArray === totalPic)
-      this.setState({
-        btnFinModDisable: true,
-      });
-    if (indexPicArray === 0)
-      this.setState({
-        btnIniModDisable: true,
-      });
   };
 
-  // Cerrar modal
   handleCloseModal = () => {
     this.setState({
       hideModal: true,
@@ -89,37 +65,29 @@ class HomeContainer extends Component {
       btnFinModDisable: false,
     });
   };
-  // Control botón Next
+
   nextPicture = () => {
     const newIndex = this.state.indexPic + 1;
     const totalPic = this.state.total - 1;
     this.setState({
       indexPic: newIndex,
       btnIniModDisable: false,
-      btnFinModDisable: false,
+      btnFinModDisable: newIndex === totalPic - 1,
     });
-    if (newIndex === totalPic)
-      this.setState({
-        btnFinModDisable: true,
-      });
   };
-  // Control botón Previo
+
   prevPicture = () => {
     const newIndex = this.state.indexPic - 1;
     this.setState({
       indexPic: newIndex,
-      btnIniModDisable: false,
+      btnIniModDisable: newIndex === 0,
       btnFinModDisable: false,
     });
-    if (newIndex === 0)
-      this.setState({
-        btnIniModDisable: true,
-      });
   };
 
   render() {
     const {
-      isFetched,
+      isFetching,
       hideModal,
       pictureArray,
       page,
@@ -136,38 +104,35 @@ class HomeContainer extends Component {
       <>
         <HomeHeader />
         <SearchTool handleSearch={this.handleSearch} />
-        {isFetched ? (
+
+        {isFetching ? (
           <Loader />
         ) : (
-          <PaginationResults
-            handleSearch={this.handleSearch}
-            page={page}
-            lastPage={lastPage}
-            btnIniPagDisable={btnIniPagDisable}
-            btnFinPagDisable={btnFinPagDisable}
-            search={search}
-          />
-        )}
-        {isFetched ? (
-          <Loader />
-        ) : (
-          <PicturesResults
-            pictureArray={pictureArray}
-            handleOpenModal={this.handleOpenModal}
-          />
-        )}
-        {hideModal ? (
-          <Loader />
-        ) : (
-          <PictureModalView
-            pictureArray={pictureArray}
-            indexPic={indexPic}
-            btnIniModDisable={btnIniModDisable}
-            btnFinModDisable={btnFinModDisable}
-            prevPicture={this.prevPicture}
-            nextPicture={this.nextPicture}
-            handleCloseModal={this.handleCloseModal}
-          />
+          <>
+            <PaginationResults
+              handleSearch={this.handleSearch}
+              page={page}
+              lastPage={lastPage}
+              btnIniPagDisable={btnIniPagDisable}
+              btnFinPagDisable={btnFinPagDisable}
+              search={search}
+            />
+            <PicturesResults
+              pictureArray={pictureArray}
+              handleOpenModal={this.handleOpenModal}
+            />
+            {!hideModal ? (
+              <PictureModalView
+                pictureArray={pictureArray}
+                indexPic={indexPic}
+                btnIniModDisable={btnIniModDisable}
+                btnFinModDisable={btnFinModDisable}
+                prevPicture={this.prevPicture}
+                nextPicture={this.nextPicture}
+                handleCloseModal={this.handleCloseModal}
+              />
+            ) : null}
+          </>
         )}
       </>
     );
