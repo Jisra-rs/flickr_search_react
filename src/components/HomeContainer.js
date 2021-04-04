@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import HomeHeader from './HomeHeader/HomeHeader';
-import SearchTool from './SearchTool/SearchTool';
+import SearchToolbar from './SearchToolbar/SearchToolbar';
 import PicturesResults from './PicturesResults/PicturesResults';
 import Loader from './Loader';
 import { getPicturesBySearch } from '../services/PicturesService';
@@ -103,7 +103,7 @@ class HomeContainer extends Component {
     return (
       <>
         <HomeHeader />
-        <SearchTool handleSearch={this.handleSearch} />
+        <SearchToolbar handleSearch={this.handleSearch} />
 
         {isFetching ? (
           <Loader />

@@ -1,18 +1,16 @@
-/* CSS document */
-
-._searchObj {
+.searchObj {
     display: flex;
     margin: 20px;
     height: 30px;
 }
 
-._searchObj input[type="text"] {
+.searchObj input[type="text"] {
     width: 100%;
     padding: 0 10px;
     margin: 0 10px;
 }
 
-._searchObj input[type="button"] {
+.searchObj input[type="button"] {
     width: 10%;
     padding: 0 10px;
     font-family: monospace;

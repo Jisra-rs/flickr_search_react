@@ -1,29 +1,26 @@
-/* Pagination */
-
-#_paginationInfo{
+.paginationInfo{
     display: flex;
     justify-content: flex-end;
-    font-family: monospace;
     font-size: 15px;
 }
 
-#_paginationInfo span{
+.paginationInfo span{
     font-weight: bold;
 }
 
-#_paginationInfo button{
+.paginationInfo button{
     border: solid;
     border-radius: 1rem;
     margin: 0px 20px;
     width: 120px;
 }
 
-#_paginationInfo button {
+.paginationInfo button {
     cursor: pointer;
     border-color: black;
     color:#333;
 }
 
-#_paginationInfo button:disabled {
+.paginationInfo button:disabled {
     color:#ddd;
 }
