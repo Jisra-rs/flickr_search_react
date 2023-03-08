@@ -1,6 +1,7 @@
+import { APP_API_KEY } from '../services/DataConnection';
+
 const URL_FLICKR_REST =
   'https://api.flickr.com/services/rest/?method=flickr.photos.search';
-const APP_API_KEY = '711fee89a5c0c9b86b046e640eb1ec3b';
 const URL_FETCH = URL_FLICKR_REST + '&api_key=' + APP_API_KEY;
 
 export async function getPicturesBySearch(queryPhoto, queryPage) {
