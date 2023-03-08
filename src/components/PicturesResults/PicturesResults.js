@@ -6,7 +6,7 @@ const PicturesResults = props => {
   const { pictureArray: results, handleOpenModal } = props;
   const images = results.photo.map(
     ({ farm, server, id, secret, title }, key) => (
-      <li className="liphoto">
+      <li className="liphoto" key={(id)}>
         <Picture
           url={`https://farm${farm}.staticflickr.com/${server}/${id}_${secret}_m.jpg`}
           id={key}

@@ -23,3 +23,8 @@ yarn-debug.log*
 yarn-error.log*
 
 .eslintcache
+
+# ignore project files
+src/services/DataConnection.js
+package-lock.json
+yarn.lock
