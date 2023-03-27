@@ -10,7 +10,7 @@
     margin: 0 10px;
 }
 
-.searchObj input[type="button"] {
+.searchObj input[type="submit"] {
     width: 10%;
     padding: 0 10px;
     font-family: monospace;

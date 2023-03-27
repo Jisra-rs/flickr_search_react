@@ -7,9 +7,8 @@ class SearchToolbar extends Component {
     this.state = { search: '' };
   }
 
-  handleChange = ({ target }) => {
-    const { value } = target;
-    this.setState({ search: value });
+  handleChange = (ev) => {
+    this.setState({ search: ev.value });
   };
 
   render() {
@@ -17,6 +16,7 @@ class SearchToolbar extends Component {
     const { search } = this.state;
 
     return (
+      <form onSubmit={ ev => { ev.preventDefault(); handleSearch(search, 1)}}>
       <div className="searchObj">
         <input
           type="text"
@@ -25,11 +25,11 @@ class SearchToolbar extends Component {
           placeholder="Search photos"
         />
         <input
-          type="button"
-          onClick={() => handleSearch(search, 1)}
+          type="submit"
           value="Search"
         />
       </div>
+      </form>
     );
   }
 }
